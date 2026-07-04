@@ -1,0 +1,63 @@
+:root{--green:#234d35;--green-dark:#14351d;--cream:#f3ead8;--panel:rgba(243,234,216,.92);--ink:#173522}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000;font-family:Arial,Helvetica,sans-serif;user-select:none;touch-action:none}
+#camera{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;background:#000;z-index:0}
+#oldPhoto{position:fixed;top:50%;left:50%;width:92vw;max-width:none;opacity:.55;transform-origin:center center;z-index:2;touch-action:none;user-select:none;-webkit-user-drag:none}
+
+/* PAGE D'ACCUEIL V3 */
+.welcome{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:44px;padding:24px 20px calc(30px + env(safe-area-inset-bottom));color:var(--ink);background:linear-gradient(180deg,rgba(243,234,216,.10),rgba(243,234,216,.22)),url("accueil-fond.jpg") center center/cover no-repeat;transition:opacity .45s ease,visibility .45s ease}
+.welcome.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.welcome-logo-wrap,.welcome-header,.welcome-brand{width:100%;display:flex;justify-content:center;align-items:center}
+.welcome-logo,.welcome-header img,.welcome-brand img{width:220px;max-width:62vw;height:auto;display:block;object-fit:contain;margin-top:-42px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.18));border-radius:0;box-shadow:none}
+.welcome-card{width:min(92vw,460px);padding:34px 30px;border-radius:34px;background:var(--panel);color:var(--ink);text-align:center;box-shadow:0 25px 70px rgba(0,0,0,.22);backdrop-filter:blur(7px)}
+.welcome-card h1,.welcome-card p,.welcome-dot,.ornament{display:none!important}
+.welcome-text,.welcome-card small{display:block;margin:0 auto 30px;color:#111;font-size:18px;line-height:1.65;font-weight:500}
+.welcome-card button{width:100%;border:0;border-radius:18px;padding:20px 24px;background:linear-gradient(180deg,#356348,#1d4d33);color:#fff;font-size:21px;font-weight:800;box-shadow:0 13px 30px rgba(0,0,0,.20);transition:.25s}
+.welcome-card button span,.welcome-card button b{float:right;font-size:26px;line-height:18px;font-weight:400}
+
+/* INTERFACE CAMERA */
+#topBar{position:fixed;z-index:30;top:calc(16px + env(safe-area-inset-top));left:16px;display:flex;align-items:center;gap:12px;max-width:calc(100vw - 32px);min-height:72px;padding:10px 16px 10px 12px;color:var(--ink);background:var(--panel);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.22);backdrop-filter:blur(8px);pointer-events:none}
+.top-logo{width:58px;height:58px;object-fit:contain;flex:0 0 auto;transform:translateY(-4px)}
+.top-brand{min-width:150px;display:flex;flex-direction:column;justify-content:center}
+.brand{font-family:Georgia,"Times New Roman",serif;font-size:25px;font-weight:900;letter-spacing:1px;color:var(--green);line-height:1}
+.baseline{margin-top:4px;font-size:12px;font-weight:700;color:var(--green)}
+.top-separator{width:1px;height:42px;background:rgba(23,53,34,.22)}
+.top-place{min-width:110px}
+.place-title{color:#111;font-size:17px;font-weight:800;line-height:1.2}
+.place-precision{margin-top:2px;font-size:12px;color:#333}
+.place-date{margin-top:3px;font-size:14px;color:#333}
+
+#bottomBar{position:fixed;z-index:30;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(92vw,900px);padding:13px 16px;color:#111;background:var(--panel);border-radius:18px;box-shadow:0 12px 35px rgba(0,0,0,.24);backdrop-filter:blur(8px)}
+.slider-wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;font-size:15px;font-weight:700}
+#opacitySlider{width:100%;accent-color:var(--green)}
+.action-row{display:flex;gap:12px;margin-top:11px}
+.action-row button{flex:1;border:0;border-radius:14px;padding:12px 8px;background:rgba(255,255,255,.42);color:#111;font-weight:800;font-size:15px}
+.gesture-hint{display:none!important}
+.hidden-photo{display:none!important}
+#errorBox{position:fixed;z-index:120;left:14px;right:14px;bottom:132px;display:none;padding:12px;border-radius:14px;color:#fff;background:rgba(120,0,0,.92);line-height:1.35}
+
+@media(max-width:430px){
+.welcome{gap:38px;padding:22px 20px calc(28px + env(safe-area-inset-bottom))}
+.welcome-logo,.welcome-header img,.welcome-brand img{width:205px;max-width:60vw;margin-top:-50px}
+.welcome-card{width:min(92vw,430px);padding:32px 24px;border-radius:32px}
+.welcome-text,.welcome-card small{font-size:17px;line-height:1.6}
+.welcome-card button{padding:19px 22px;font-size:20px}
+#topBar{top:calc(10px + env(safe-area-inset-top));left:10px;right:10px;max-width:none;padding:9px 11px;gap:9px}
+.top-logo{width:54px;height:54px;transform:translateY(-4px)}
+.top-brand{min-width:120px}.brand{font-size:21px}.baseline{font-size:11px}.place-title{font-size:15px}.place-date{font-size:12px}
+#bottomBar{width:calc(100vw - 20px);padding:12px}.slider-wrap{font-size:13px;gap:9px}.action-row button{padding:11px 6px;font-size:13px}
+}
+
+@media(orientation:landscape) and (max-height:520px){
+.welcome{flex-direction:row;justify-content:center;gap:32px;padding:18px 32px}
+.welcome-logo,.welcome-header img,.welcome-brand img{width:190px;max-width:28vw;margin-top:0}
+.welcome-logo-wrap,.welcome-header,.welcome-brand{width:auto}
+.welcome-card{width:min(44vw,430px);padding:26px;border-radius:30px}
+.welcome-text,.welcome-card small{display:none}
+.welcome-card button{padding:16px 20px;font-size:18px}
+#topBar{top:calc(10px + env(safe-area-inset-top));left:calc(14px + env(safe-area-inset-left));min-height:54px;padding:7px 12px 7px 9px;gap:10px;border-radius:14px}
+.top-logo{width:44px;height:44px;transform:translateY(-2px)}
+.top-brand{min-width:130px}.brand{font-size:22px}.baseline{font-size:11px;margin-top:2px}.top-separator{height:34px}.place-title{font-size:15px}.place-date,.place-precision{font-size:12px}
+#bottomBar{width:min(70vw,760px);bottom:calc(10px + env(safe-area-inset-bottom));padding:9px 12px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;border-radius:14px}
+.slider-wrap{font-size:13px;gap:10px}.action-row{margin:0;gap:8px}.action-row button{min-width:112px;padding:10px 12px;font-size:13px}
+}
