@@ -1,6 +1,0 @@
-Version clé en main.
-- Style V3 intégré dans style.css
-- Logo d'accueil réduit et remonté
-- Logo de la page caméra agrandi
-- Bouton Commencer sécurisé
-- Cache CSS/JS forcé avec ?v=31
