@@ -6,6 +6,24 @@
   <title>CHORGES – Hier & Aujourd’hui</title>
   <link rel="stylesheet" href="style.css?v=20" />
 </head>
+  <script>
+document.getElementById("startBtn").onclick = async function () {
+  try {
+    const camera = document.getElementById("camera");
+    const welcome = document.getElementById("welcome");
+
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: "environment" } },
+      audio: false
+    });
+
+    camera.srcObject = stream;
+    welcome.classList.add("hidden");
+  } catch (e) {
+    alert("Impossible d’ouvrir la caméra. Autorisez la caméra dans le navigateur.");
+  }
+};
+</script>
 <body>
   <video id="camera" autoplay playsinline muted></video>
   <img id="oldPhoto" alt="Vue ancienne superposée" />
