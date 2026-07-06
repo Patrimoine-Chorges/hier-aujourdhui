@@ -145,6 +145,103 @@ hideBtn.addEventListener('click', () => {
   hideBtn.textContent = oldPhoto.classList.contains('hidden-photo') ? '◉ Afficher' : '◉ Masquer';
 });
 
+/* === V6 — GPS + aide d’alignement + message immersif === */
+
+const POINTS_GPS = {
+  "1": {
+    nom: "Grande Rue",
+    lat: 44.54790,
+    lon: 6.27790,
+    rayon: 15
+  }
+};
+
+const gpsBox = document.createElement("div");
+gpsBox.id = "gpsBox";
+document.body.appendChild(gpsBox);
+
+function distanceMetres(lat1, lon1, lat2, lon2) {
+  const R = 6371000;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) *
+    Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) ** 2;
+
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function showGpsMessage(text, ok = false) {
+  gpsBox.textContent = text;
+  gpsBox.className = ok ? "ok" : "";
+}
+
+function startGpsCheck() {
+  const point = POINTS_GPS[photoNumber];
+
+  if (!point || !navigator.geolocation) {
+    showGpsMessage("GPS indisponible");
+    return;
+  }
+
+  navigator.geolocation.watchPosition(
+    pos => {
+      const d = distanceMetres(
+        pos.coords.latitude,
+        pos.coords.longitude,
+        point.lat,
+        point.lon
+      );
+
+      if (d <= point.rayon) {
+        showGpsMessage("✓ Position correcte", true);
+        showImmersionMessage();
+      } else {
+        showGpsMessage(`Vous êtes à ${Math.round(d)} m du point de vue`);
+      }
+    },
+    () => {
+      showGpsMessage("Autorisez la localisation pour vous guider");
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 5000,
+      timeout: 10000
+    }
+  );
+}
+
+let immersionShown = false;
+
+function showImmersionMessage() {
+  if (immersionShown) return;
+  immersionShown = true;
+
+  const msg = document.createElement("div");
+  msg.id = "immersionMsg";
+  msg.textContent = "Vous êtes au point de vue du photographe.";
+  document.body.appendChild(msg);
+
+  setTimeout(() => {
+    msg.classList.add("visible");
+  }, 200);
+
+  setTimeout(() => {
+    msg.classList.remove("visible");
+  }, 4200);
+}
+
+/* Lance le GPS après clic sur Commencer */
+const oldStartBtn = document.getElementById("startBtn");
+
+if (oldStartBtn) {
+  oldStartBtn.addEventListener("click", () => {
+    setTimeout(startGpsCheck, 1200);
+  });
+}
+
 startBtn.addEventListener('click', startCamera);
 oldPhoto.addEventListener('load', hideError);
 oldPhoto.addEventListener('error', () => { showError(`Image introuvable : ${oldPhoto.src}`); });
