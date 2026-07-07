@@ -247,3 +247,19 @@ oldPhoto.addEventListener('load', hideError);
 oldPhoto.addEventListener('error', () => { showError(`Image introuvable : ${oldPhoto.src}`); });
 
 loadView().then(applyTransform);
+
+const POINTS_GPS = {
+  "1": { nom: "Point 1", lat: 44.54630327, lon: 6.27225913, rayon: 15 },
+  "2": { nom: "Point 2", lat: 44.54643625, lon: 6.27250232, rayon: 15 },
+  "3": { nom: "Point 3", lat: 44.54515130, lon: 6.27536403, rayon: 15 },
+  "4": { nom: "Point 4", lat: 44.54497760, lon: 6.27657165, rayon: 15 },
+  "5": { nom: "Point 5", lat: 44.54458453, lon: 6.27596940, rayon: 15 },
+  "6": { nom: "Point 6", lat: 44.54537213, lon: 6.27652664, rayon: 15 },
+  "7": { nom: "Point 7", lat: 44.54537213, lon: 6.27652664, rayon: 15 },
+  "8": { nom: "Point 8", lat: 44.54527199, lon: 6.27654918, rayon: 15 },
+  "9": { nom: "Point 9", lat: 44.54531861, lon: 6.27700306, rayon: 15 },
+  "10": { nom: "Point 10", lat: 44.54526339, lon: 6.27738488, rayon: 15 },
+  "11": { nom: "Point 11", lat: 44.54472823, lon: 6.27900024, rayon: 15 },
+  "12": { nom: "Point 12", lat: 44.54566775, lon: 6.27607764, rayon: 15 },
+  "13": { nom: "Point 13", lat: 44.54570747, lon: 6.27505197, rayon: 15 }
+};
