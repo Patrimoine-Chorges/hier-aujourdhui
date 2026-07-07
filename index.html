@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>CHORGES – Hier & Aujourd’hui</title>
+  <link rel="stylesheet" href="style.css?v=71" />
+</head>
+<body>
+  <video id="camera" autoplay playsinline muted></video>
+  <img id="oldPhoto" alt="Vue ancienne superposée" />
+
+  <main id="welcome" class="welcome">
+    <div class="welcome-logo-wrap">
+      <img class="welcome-logo" src="logo.png" alt="CHORGES – Hier & Aujourd’hui" />
+    </div>
+
+    <section class="welcome-card">
+      <p class="welcome-text">
+        Placez-vous dans les empreintes,<br>
+        puis comparez le paysage actuel<br>
+        avec la vue ancienne.
+      </p>
+      <button id="startBtn" type="button">Commencer <span>→</span></button>
+    </section>
+  </main>
+
+  <header id="topBar">
+    <img class="top-logo" src="logo.png" alt="" />
+    <div class="top-brand">
+      <div class="brand">CHORGES</div>
+      <div class="baseline">Hier & Aujourd’hui</div>
+    </div>
+    <div class="top-separator"></div>
+    <div class="top-place">
+      <div id="placeTitle" class="place-title">Chargement…</div>
+      <div id="placePrecision" class="place-precision"></div>
+      <div id="placeDate" class="place-date"></div>
+    </div>
+  </header>
+
+  <footer id="bottomBar">
+    <div class="slider-wrap">
+      <span>Aujourd’hui</span>
+      <input id="opacitySlider" type="range" min="0" max="1" step="0.01" value="0.55" />
+      <span id="pastLabel">Autrefois</span>
+    </div>
+    <div class="action-row">
+      <button id="resetBtn" type="button">↻ Recentrer</button>
+      <button id="hideBtn" type="button">◉ Masquer</button>
+    </div>
+  </footer>
+
+  <div id="errorBox" role="alert"></div>
+  <script src="script.js?v=71"></script>
+
+<script>
+(function(){
+  const btn = document.getElementById("startBtn");
+  if (!btn || btn.dataset.cameraFixed) return;
+  btn.dataset.cameraFixed = "1";
+  btn.addEventListener("click", async function(){
+    const camera = document.getElementById("camera");
+    const welcome = document.getElementById("welcome");
+    if (camera && camera.srcObject) {
+      if (welcome) welcome.classList.add("hidden");
+      return;
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: { ideal: "environment" } },
+        audio: false
+      });
+      if (camera) camera.srcObject = stream;
+      if (welcome) welcome.classList.add("hidden");
+    } catch(e) {
+      alert("Impossible d’ouvrir la caméra. Autorisez la caméra dans le navigateur.");
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
