@@ -1,0 +1,8 @@
+Mode calibration V7
+Ouvrir l'application avec : ?photo=1&calibration=1
+Exemple : https://patrimoine-chorges.github.io/hier-aujourdhui/?photo=1&calibration=1
+1. Se placer sur les empreintes.
+2. Appuyer sur Activer capteurs.
+3. Cadrer la photo ancienne.
+4. Appuyer sur Enregistrer.
+5. Copier le JSON généré.

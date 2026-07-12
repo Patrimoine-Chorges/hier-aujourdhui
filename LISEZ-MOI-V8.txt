@@ -1,0 +1,12 @@
+V8 — points.json intégré + guidage visiteur
+
+Installation : téléverser tout le contenu du ZIP dans le dépôt GitHub Pages.
+
+Fonctionnement public :
+- ouvre la caméra après Commencer ;
+- demande GPS et capteurs ;
+- guide vers le point ;
+- indique droite/gauche, haut/bas et roulis ;
+- affiche un message lorsque position et orientation sont correctes.
+
+Le mode calibration reste accessible avec ?photo=1&calibration=1.
