@@ -1,0 +1,26 @@
+V10 — orientation libre et icônes patrimoniales
+
+MODIFICATIONS
+- Suppression du verrouillage en paysage.
+- Passage libre portrait / paysage, y compris en plein écran.
+- Remplacement des textes Ajuster, Recentrer, Masquer et Plein écran / Quitter par des icônes gravées.
+- Suppression du bouton Guidage dans la barre du bas.
+- Après fermeture du guidage GPS, une petite icône de boussole apparaît pour le rouvrir.
+- Barre inférieure plus fine, notamment en plein écran et en paysage.
+
+DANS GITHUB
+Remplacer :
+- index.html
+- script.js
+- style.css
+
+Conserver tous les autres fichiers :
+- manifest.webmanifest
+- CNAME
+- vues.json
+- points.json
+- images/
+- p/
+- accueil-fond.jpg
+- logo.png
+- logo-header.svg
