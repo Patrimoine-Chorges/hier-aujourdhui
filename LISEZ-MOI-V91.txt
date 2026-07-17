@@ -1,0 +1,24 @@
+V9.1 — modifications
+
+- Bouton « Fermer » ajouté au panneau de guidage GPS.
+- Bouton « Plein écran » ajouté en bas.
+- En paysage, les barres internes de l’application sont compactées.
+- Ajout d’un manifeste pour ouvrir l’application en mode autonome depuis l’écran d’accueil.
+
+À remplacer dans GitHub :
+- index.html
+- script.js
+- style.css
+
+À ajouter :
+- manifest.webmanifest
+
+Conserver :
+- CNAME
+- vues.json
+- points.json
+- images/
+- p/
+- accueil-fond.jpg
+- logo.png
+- logo-header.svg
