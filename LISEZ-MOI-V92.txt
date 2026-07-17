@@ -1,0 +1,15 @@
+V9.2 — version immersive
+
+À remplacer dans GitHub :
+- index.html
+- script.js
+- style.css
+
+Conserver tous les autres fichiers.
+
+Nouveautés :
+- bouton Fermer du guidage fonctionnel ;
+- bouton Guidage pour le rouvrir ;
+- barre inférieure réduite en plein écran ;
+- commandes masquées automatiquement après 2,6 secondes ;
+- toucher l’écran pour les faire réapparaître.
