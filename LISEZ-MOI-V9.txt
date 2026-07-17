@@ -1,0 +1,15 @@
+V9 — comparaison avant/après au doigt
+
+Installation :
+1. Décompresser le ZIP.
+2. Téléverser tous les fichiers dans le dépôt GitHub Pages.
+3. Remplacer les fichiers existants.
+4. Attendre la publication GitHub Pages puis actualiser le navigateur.
+
+Utilisation :
+- Mode par défaut : faites glisser un doigt horizontalement sur l’image.
+- La ligne verticale sépare Aujourd’hui et Autrefois.
+- Bouton « Ajuster » : permet de déplacer, agrandir et tourner la photo ancienne.
+- Bouton « Comparer » : revient à la comparaison au doigt.
+- Le curseur inférieur reste utilisable comme solution de secours.
+- Le guidage GPS et l’orientation sont conservés.
