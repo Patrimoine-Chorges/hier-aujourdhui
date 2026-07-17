@@ -1,7 +1,0 @@
-V5 — écran de comparaison redesigné.
-- Bandeau supérieur plus élégant
-- Logo de comparaison agrandi
-- Panneau inférieur plus premium
-- Boutons Recentrer / Masquer harmonisés
-- Mode paysage compact
-- Fonctionnement inchangé
