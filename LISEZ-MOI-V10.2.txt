@@ -1,0 +1,14 @@
+V10.2 — guidage d’orientation plus tolérant
+
+MODIFICATIONS
+- Photo affichée uniquement à 20 m ou moins du point de vue.
+- Tolérance horizontale minimale : ±15°.
+- Tolérance d’inclinaison verticale et latérale : ±8°.
+- Indications simplifiées : « Tournez franchement » au-delà de 30°, puis « Tournez légèrement ».
+- Lissage des mesures de boussole et d’inclinaison pour limiter les changements brusques.
+- Courte vibration lorsque la position et l’orientation sont correctes, si le téléphone l’autorise.
+- Zoom à deux doigts conservé.
+
+DANS GITHUB
+Remplacer : index.html, script.js et style.css.
+Conserver les autres fichiers du site.
