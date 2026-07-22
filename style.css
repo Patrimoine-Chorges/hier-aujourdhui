@@ -1627,14 +1627,36 @@ body.photo-view #adjustBtn{
     width:auto !important;
     min-width:188px;
   }
+  
   #bottomBar .action-row{
     grid-template-columns:repeat(3, 46px) !important;
     gap:10px !important;
   }
+  
   #bottomBar .action-row button{
     width:46px !important;
     height:46px !important;
     min-width:46px !important;
     min-height:46px !important;
   }
+  
+.footer{
+    position:absolute;
+    bottom:18px;
+    left:0;
+    width:100%;
+    text-align:center;
+    z-index:1000;
+}
+
+.footer a{
+    font-size:12px;
+    color:rgba(255,255,255,.75);
+    text-decoration:none;
+    transition:opacity .2s;
+}
+
+.footer a:hover{
+    opacity:1;
+    text-decoration:underline;
 }
