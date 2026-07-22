@@ -256,7 +256,7 @@
       "image": "10.png",
       "source_calibration": null,
       "gps": {
-	"lat": 44.545283,
+        "lat": 44.545283,
         "lon": 6.276534,
         "precision": 3
       },
