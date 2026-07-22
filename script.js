@@ -19,12 +19,15 @@ function assetUrl(relativePath) {
 
 const camera = document.getElementById("camera");
 const oldPhoto = document.getElementById("oldPhoto");
+const opacitySlider = document.getElementById("opacitySlider");
 const placeTitle = document.getElementById("placeTitle");
 const placePrecision = document.getElementById("placePrecision");
 const placeDate = document.getElementById("placeDate");
+const pastLabel = document.getElementById("pastLabel");
 const startBtn = document.getElementById("startBtn");
 const welcome = document.getElementById("welcome");
 const resetBtn = document.getElementById("resetBtn");
+const hideBtn = document.getElementById("hideBtn");
 const errorBox = document.getElementById("errorBox");
 const comparisonSurface = document.getElementById("comparisonSurface");
 const comparisonDivider = document.getElementById("comparisonDivider");
@@ -39,9 +42,6 @@ let photoAccessGranted = calibrationMode;
 function setPhotoAccess(granted) {
   photoAccessGranted = Boolean(granted) || calibrationMode;
   document.body.classList.toggle("gps-photo-locked", !photoAccessGranted);
-  if (!photoAccessGranted && typeof photoViewOpen !== "undefined" && photoViewOpen) {
-    setPhotoView(false);
-  }
 
   // Empêche également toute interaction invisible avec la comparaison.
   comparisonSurface.setAttribute("aria-hidden", photoAccessGranted ? "false" : "true");
@@ -85,11 +85,7 @@ function applyTransform() {
   const reveal = Math.max(0, Math.min(100, Number(state.reveal)));
   oldPhoto.style.clipPath = `inset(0 ${100 - reveal}% 0 0)`;
   comparisonDivider.style.left = `${reveal}%`;
-
-  if (photoViewOpen) {
-    oldPhoto.style.opacity = "1";
-    oldPhoto.style.clipPath = "none";
-  }
+  opacitySlider.value = String(Math.round(reveal));
 }
 
 function distance(a, b) {
@@ -141,7 +137,7 @@ function showAlignedMessage() {
   const msg = document.getElementById("alignedMessage");
   if (!msg) return;
   msg.classList.add("visible");
-  setTimeout(() => msg.classList.remove("visible"), 1000);
+  setTimeout(() => msg.classList.remove("visible"), 3800);
 }
 
 function normalize360(value) {
@@ -229,6 +225,7 @@ function evaluateGuidance() {
   const absAzDiff = Math.abs(azDiff);
 
   if (absAzDiff > azTol) {
+    alignmentMessageShown = false;
     orientationAlignedNotified = false;
     const direction = azDiff > 0 ? "vers la droite" : "vers la gauche";
     const instruction = absAzDiff > 30
@@ -247,6 +244,7 @@ function evaluateGuidance() {
     const pitchTol = Math.max(8, Number(settings.tolerancePitch || 8));
 
     if (Math.abs(pitchDiff) > pitchTol) {
+      alignmentMessageShown = false;
       const action = pitchDiff > 0
         ? "Inclinez un peu plus le téléphone vers le haut."
         : "Inclinez un peu plus le téléphone vers le bas.";
@@ -260,6 +258,7 @@ function evaluateGuidance() {
     const rollTol = Math.max(8, Number(settings.toleranceRoll || 8));
 
     if (Math.abs(rollDiff) > rollTol) {
+      alignmentMessageShown = false;
       const action = rollDiff > 0
         ? "Inclinez légèrement le téléphone vers la droite."
         : "Inclinez légèrement le téléphone vers la gauche.";
@@ -296,6 +295,7 @@ async function loadViewAndPoint() {
       activePoint?.precision || view.precision || "";
     placeDate.textContent =
       activePoint?.date || view.date || "Autrefois";
+    pastLabel.textContent = "Autrefois";
 
     const imageFile =
       activePoint?.image || view.image || `${photoNumber}.png`;
@@ -304,6 +304,7 @@ async function loadViewAndPoint() {
     placeTitle.textContent = `Vue ${photoNumber}`;
     placePrecision.textContent = "";
     placeDate.textContent = "Autrefois";
+    pastLabel.textContent = "Autrefois";
     oldPhoto.src = assetUrl(`images/${photoNumber}.png`);
     activePoint = null;
   }
@@ -473,22 +474,27 @@ oldPhoto.addEventListener("pointermove", event => {
   });
 });
 
+opacitySlider.addEventListener("input", event => {
+  state.reveal = Number(event.target.value);
+  applyTransform();
+});
+
+
 let comparisonMode = true;
 let comparisonPointerId = null;
-let photoViewOpen = false;
 
-function setPhotoView(open) {
-  photoViewOpen = Boolean(open) && photoAccessGranted;
-  document.body.classList.toggle("photo-view", photoViewOpen);
-  adjustBtn.classList.toggle("is-photo-view", photoViewOpen);
-  adjustBtn.setAttribute(
+function setComparisonMode(enabled) {
+  comparisonMode = enabled;
+  document.body.classList.toggle("adjust-mode", !enabled);
+  adjustBtn.classList.toggle("is-adjusting", !enabled);
+  adjustBtn.setAttribute("aria-label", enabled ? "Ajuster la photographie" : "Revenir à la comparaison");
+  adjustBtn.title = enabled ? "Ajuster" : "Comparer";
+  comparisonSurface.setAttribute(
     "aria-label",
-    photoViewOpen
-      ? "Revenir à la vue en réalité augmentée"
-      : "Afficher la photographie ancienne en plein écran"
+    enabled
+      ? "Faites glisser le doigt pour comparer"
+      : "Mode ajustement de la photographie"
   );
-  adjustBtn.title = photoViewOpen ? "Retour à la vue actuelle" : "Voir la photographie ancienne";
-  applyTransform();
 }
 
 function updateRevealFromPointer(event) {
@@ -518,8 +524,10 @@ comparisonSurface.addEventListener("pointermove", event => {
 });
 
 adjustBtn.addEventListener("click", () => {
-  setPhotoView(!photoViewOpen);
+  setComparisonMode(!comparisonMode);
 });
+
+setComparisonMode(true);
 
 resetBtn.addEventListener("click", () => {
   state = {
@@ -531,8 +539,20 @@ resetBtn.addEventListener("click", () => {
     reveal: 50
   };
 
-  setPhotoView(false);
+  opacitySlider.value = state.reveal;
+  oldPhoto.classList.remove("hidden-photo");
+  hideBtn.classList.remove("is-hidden-photo");
+  hideBtn.setAttribute("aria-label", "Masquer la photographie ancienne");
+  hideBtn.title = "Masquer";
   applyTransform();
+});
+
+hideBtn.addEventListener("click", () => {
+  oldPhoto.classList.toggle("hidden-photo");
+  const photoHidden = oldPhoto.classList.contains("hidden-photo");
+  hideBtn.classList.toggle("is-hidden-photo", photoHidden);
+  hideBtn.setAttribute("aria-label", photoHidden ? "Afficher la photographie ancienne" : "Masquer la photographie ancienne");
+  hideBtn.title = photoHidden ? "Afficher" : "Masquer";
 });
 
 startBtn.addEventListener("click", startCameraAndGuidance);
